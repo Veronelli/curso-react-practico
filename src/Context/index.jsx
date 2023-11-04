@@ -2,9 +2,27 @@ import { createContext, useState, useEffect } from 'react'
 
 export const ShoppingCartContext = createContext()
 
+const useUser = ()=> {
+  const [user, setUserData] = useState({});
+  const setUser = (userData) => {
+    localStorage.setItem("userData", JSON.stringify(userData));
+  }
+  const getUser = (userData) => {
+    const userDataStorage = localStorage.getItem("userData")
+    return JSON.parse(userDataStorage);
+  }
+
+  useEffect(()=>{
+    setUserData(getUser())
+  },[])
+
+  return {user, setUser, getUser}
+}
+
 export const ShoppingCartProvider = ({children}) => {
   // Shopping Cart · Increment quantity
   const [count, setCount] = useState(0)
+  const {user, setUser, getUser} = useUser();
 
   // Product Detail · Open/Close
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
@@ -96,7 +114,10 @@ export const ShoppingCartProvider = ({children}) => {
       setSearchByTitle,
       filteredItems,
       searchByCategory,
-      setSearchByCategory
+      setSearchByCategory,
+      user,
+      setUser,
+      getUser
     }}>
       {children}
     </ShoppingCartContext.Provider>
