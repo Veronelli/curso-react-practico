@@ -23,7 +23,7 @@ const useUser = ()=> {
   const findUserByUsername = (credentials)=>{
     const usersData = findUser(); 
     const user = usersData.find(user=>user.username == credentials.username && user.password == credentials.password);
-    return user || [];
+    return user || undefined;
   }
 
   // Create a new user

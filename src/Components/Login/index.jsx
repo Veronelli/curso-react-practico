@@ -18,7 +18,10 @@ function Login(){
 
     const submitData = ()=>{
         const user = findUserByUsername(userData);
-        setUser(userData)
+        if(user){
+            setUser(userData)
+
+        }
     }
 
     return (
