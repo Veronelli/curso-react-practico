@@ -9,7 +9,9 @@ const useUser = ()=> {
   }
   const getUser = () => {
     const userDataStorage = localStorage.getItem("userData")
-    return JSON.parse(userDataStorage);
+    const userLoged = JSON.parse(userDataStorage);
+    const userData = findUserByUsername(userLoged)
+    return userData;
   }
 
   // Find users

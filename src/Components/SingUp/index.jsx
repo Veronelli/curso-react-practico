@@ -19,9 +19,6 @@ function SingUp() {
     createUser(userData);
     setCreated(true)
   };
-  React.useEffect(() => {
-    findUserByEmail();
-  }, []);
   return (
     <>
       <h1 className="text-lg ">Sing Up</h1>
