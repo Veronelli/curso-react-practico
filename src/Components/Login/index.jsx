@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {ShoppingCartContext} from "../../Context";
 
 function Login(){
-    const {setUser, getUser} = React.useContext(ShoppingCartContext)
+    const {setUser, getUser, findUserByUsername} = React.useContext(ShoppingCartContext)
     const [userData, setUserData] = React.useState({
         username: "",
         password: ""
@@ -17,6 +17,7 @@ function Login(){
     }
 
     const submitData = ()=>{
+        const user = findUserByUsername(userData);
         setUser(userData)
     }
 

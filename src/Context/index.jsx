@@ -7,22 +7,44 @@ const useUser = ()=> {
   const setUser = (userData) => {
     localStorage.setItem("userData", JSON.stringify(userData));
   }
-  const getUser = (userData) => {
+  const getUser = () => {
     const userDataStorage = localStorage.getItem("userData")
     return JSON.parse(userDataStorage);
+  }
+
+  // Find users
+  const findUser = ()=>{
+    const usersData = JSON.parse(localStorage.getItem("usersData")) || [];
+    return usersData ? usersData : []
+
+  }
+
+  // Find User by email verify password match
+  const findUserByUsername = (credentials)=>{
+    const usersData = findUser(); 
+    const user = usersData.find(user=>user.username == credentials.username && user.password == credentials.password);
+    return user || [];
+  }
+
+  // Create a new user
+  const createUser = (newUser)=>{
+    const usersData = findUser();
+    usersData.push(newUser)
+    localStorage.setItem("usersData", JSON.stringify(usersData));
+    return "successfull";
   }
 
   useEffect(()=>{
     setUserData(getUser())
   },[])
 
-  return {user, setUser, getUser}
+  return {user, setUser, getUser, findUserByUsername,createUser}
 }
 
 export const ShoppingCartProvider = ({children}) => {
   // Shopping Cart · Increment quantity
   const [count, setCount] = useState(0)
-  const {user, setUser, getUser} = useUser();
+  const {user, setUser, getUser,findUserByUsername,createUser} = useUser();
 
   // Product Detail · Open/Close
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
@@ -117,7 +139,9 @@ export const ShoppingCartProvider = ({children}) => {
       setSearchByCategory,
       user,
       setUser,
-      getUser
+      getUser,
+      findUserByUsername,
+      createUser
     }}>
       {children}
     </ShoppingCartContext.Provider>
