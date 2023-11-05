@@ -11,6 +11,7 @@ const useUser = ()=> {
     const userDataStorage = localStorage.getItem("userData")
     const userLoged = JSON.parse(userDataStorage);
     const userData = findUserByUsername(userLoged)
+    setUserData(userData)
     return userData;
   }
 
