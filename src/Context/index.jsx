@@ -2,16 +2,16 @@ import { createContext, useState, useEffect } from 'react'
 
 export const ShoppingCartContext = createContext()
 
-const useUser = ()=> {
+export const useUser = ()=> {
   const [user, setUserData] = useState({});
   const setUser = (userData) => {
     localStorage.setItem("userData", JSON.stringify(userData));
+    setUserData(userData)
   }
   const getUser = () => {
     const userDataStorage = localStorage.getItem("userData")
     const userLoged = JSON.parse(userDataStorage);
     const userData = findUserByUsername(userLoged)
-    setUserData(userData)
     return userData;
   }
 

@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Account } from "../../Components/Account";
 import Layout from "../../Components/Layout";
-import { Login } from "../../Components/Login";
 import React from "react";
 import { ShoppingCartContext } from "../../Context";
 

@@ -6,13 +6,12 @@ import { ShoppingCartContext } from "../../Context";
 const Navbar = () => {
   const context = useContext(ShoppingCartContext);
   const activeStyle = "underline underline-offset-4";
-  const [userData, setUserData] = useState()
+  const [userData, setUserData] = useState();
 
   const { getUser, user } = useContext(ShoppingCartContext);
-  useEffect(()=>{
+  useEffect(() => {
     setUserData(getUser());
-
-  },[user])
+  }, [user]);
   return (
     <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light">
       <ul className="flex items-center gap-3">
@@ -94,14 +93,16 @@ const Navbar = () => {
             </NavLink>
           </li>
         )}
-        <li>
-          <NavLink
-            to="/sing-in"
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            Sign In
-          </NavLink>
-        </li>
+        {!userData && (
+          <li>
+            <NavLink
+              to="/sing-in"
+              className={({ isActive }) => (isActive ? activeStyle : undefined)}
+            >
+              Sign In
+            </NavLink>
+          </li>
+        )}
         <li className="flex items-center">
           <ShoppingBagIcon className="h-6 w-6 text-black"></ShoppingBagIcon>
           <div>{context.cartProducts.length}</div>
