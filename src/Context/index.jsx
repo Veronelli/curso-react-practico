@@ -16,7 +16,7 @@ export const useUser = ()=> {
   }
 
   // Find users
-  const findUser = ()=>{
+  const findUsers = ()=>{
     const usersData = JSON.parse(localStorage.getItem("usersData")) || [];
     return usersData ? usersData : []
 
@@ -24,14 +24,18 @@ export const useUser = ()=> {
 
   // Find User by email verify password match
   const findUserByUsername = (credentials)=>{
-    const usersData = findUser(); 
+    const usersData = findUsers(); 
     const user = usersData.find(user=>user.username == credentials.username && user.password == credentials.password);
     return user || undefined;
   }
 
+  const setUsers = (users)=>{
+    localStorage.setItem("usersData", JSON.stringify(users))
+  }
+
   // Create a new user
   const createUser = (newUser)=>{
-    const usersData = findUser();
+    const usersData = findUsers();
     usersData.push(newUser)
     localStorage.setItem("usersData", JSON.stringify(usersData));
     return "successfull";
@@ -41,13 +45,13 @@ export const useUser = ()=> {
     setUserData(getUser())
   },[])
 
-  return {user, setUser, getUser, findUserByUsername,createUser}
+  return {user, setUser, getUser, findUserByUsername,createUser, findUsers, setUsers}
 }
 
 export const ShoppingCartProvider = ({children}) => {
   // Shopping Cart · Increment quantity
   const [count, setCount] = useState(0)
-  const {user, setUser, getUser,findUserByUsername,createUser} = useUser();
+  const {user, setUser, getUser,findUserByUsername,createUser,findUsers, setUsers} = useUser();
 
   // Product Detail · Open/Close
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
@@ -144,7 +148,9 @@ export const ShoppingCartProvider = ({children}) => {
       setUser,
       getUser,
       findUserByUsername,
-      createUser
+      createUser,
+      findUsers,
+      setUsers
     }}>
       {children}
     </ShoppingCartContext.Provider>
