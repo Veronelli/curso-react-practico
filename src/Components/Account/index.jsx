@@ -54,7 +54,6 @@ function Account() {
       let foundUsers = findUsers();
       foundUsers.forEach((userData) => {
         if (userData.email === user.email) {
-          console.log(editUser)
           users.push({ ...editUser });
         } else {
           users.push({ ...userData });
